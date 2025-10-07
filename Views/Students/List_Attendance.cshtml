@@ -1,0 +1,36 @@
+﻿@model IEnumerable<BookMate.Models.ViewModel.AttendanceViewModel>
+@{
+    ViewBag.Title = "Student Attendance List";
+}
+
+
+<h4>Attendance Record</h4>
+<hr />
+
+<table class="table table-bordered table-hover table-striped shadow ">
+    <thead>
+        <tr>
+            <th>Log_Id</th>
+            <th>Std_Id</th>
+            <th>Name</th>
+            <th>Seat_No</th>
+            <th>Check-In</th>
+            <th>Check-Out</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var log in Model)
+        {
+            <tr>
+                <td>@log.Log_ID</td>
+                <td>@log.student_ID</td>
+                <td>@log.Student_Name</td>
+                <td>@log.SeatID</td>
+                <td>@(log.CheckInTime?.ToString("dd/MM/yyyy hh:mm tt"))</td>
+                <td>@(log.CheckOutTime?.ToString("dd/MM/yyyy hh:mm tt") ?? "-")</td>
+                <td>@log.Status</td>
+            </tr>
+        }
+    </tbody>
+</table>

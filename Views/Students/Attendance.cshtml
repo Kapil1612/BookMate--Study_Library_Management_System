@@ -1,0 +1,53 @@
+﻿@model AttendanceLog
+
+@{
+    ViewBag.Title = "Attendance Page";
+}
+
+<h4>Student Attendance – Check-In / Check-Out</h4>
+
+<hr />
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show mb-2" >
+        @TempData["Message"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+
+    </div>
+}
+<p>
+    <a asp-action="List_Attendance" class="btn btn-primary btn-sm"> Check-In / Check-Out Record</a>
+</p>
+<div style="background-color: #E0E0E0" class="card p-4 shadow">
+    <form method="post" asp-action="Attendance">
+        <div >
+            <label asp-for="StudentID" >Student ID:</label>
+            <input class="ms-3" asp-for="StudentID" required />
+        </div>
+        
+        <div class="mt-3">
+            <label asp-for="SeatID">Select Seat:</label>
+            <select class="ms-3" name="SeatID" >
+                <option value="">-- Select Seat --</option>
+                @foreach (var seat in ViewBag.Seats)
+                {
+                    <option value="@seat.SeatID">@seat.SeatID</option>
+                }
+            </select>
+
+        </div>
+
+        <div class="mt-3">
+            <label for="actionType">Action:</label>
+            <select class="ms-5" id="actionType" name="actionType" required>
+                <option value="CheckIn">Check-In</option>
+                <option value="CheckOut">Check-Out</option>
+            </select>
+        </div>
+        <div class="mt-4">
+            <button type="submit">Submit</button>
+        </div>
+    </form>
+</div>
+

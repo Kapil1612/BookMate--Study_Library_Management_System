@@ -1,0 +1,32 @@
+﻿@model IEnumerable<BookMate.Models.Seat>
+@{
+    ViewBag.Title = "Seat List";
+}
+
+<h4>All Seats</h4>
+
+<hr />
+<p>
+    <form asp-action="Create_Seat" method="post">
+        <button type="submit" class="btn btn-primary btn-sm">Add Seat</button>
+    </form>
+</p>
+<table class="table table-bordered table-hover table-striped shadow">
+    <thead>
+        <tr>
+            <th>Seat_No</th>
+           
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var seat in Model)
+        {
+            <tr>
+                <td>@seat.SeatID</td>
+                
+                <td>@seat.SeatStatus </td>
+            </tr>
+        }
+    </tbody>
+</table>

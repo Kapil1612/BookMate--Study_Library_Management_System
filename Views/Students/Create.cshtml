@@ -1,0 +1,136 @@
+﻿@model BookMate.Models.Student
+@{
+    ViewBag.Title = "Registration Page";
+}
+
+
+<form asp-action="Create" method="post">
+    <h2>Registration Form</h2>
+
+    <hr />
+
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label asp-for="First_Name" class="form-label">First Name</label>
+            <input asp-for="First_Name" class="form-control" />
+            <span asp-validation-for="First_Name" class="text-danger"></span>
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="Last_Name" class="form-label">Last Name</label>
+            <input asp-for="Last_Name" class="form-control" />
+            <span asp-validation-for="Last_Name" class="text-danger"></span>
+        </div>
+    </div>
+
+
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label asp-for="Date_of_Birth" class="form-label">Date Of Birth</label>
+            <input asp-for="Date_of_Birth" type="date" class="form-control" />
+        </div>
+
+
+
+        <div class="col-md-6">
+            <label asp-for="Gender" class="form-label">Gender</label><br />
+            <div class="d-flex gap-3">
+                <div>
+                    <input type="radio" asp-for="Gender" value="Male" />
+                    <label>Male</label>
+                </div>
+                <div>
+                    <input type="radio" asp-for="Gender" value="Female" />
+                    <label>Female</label>
+                </div>
+                <div>
+                    <input type="radio" asp-for="Gender" value="Other" />
+                    <label>Other</label>
+                </div>
+            </div>
+            <span asp-validation-for="Gender" class="text-danger"></span>
+        </div>
+    </div>
+
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label asp-for="No_of_Months" class="form-label">Duration (In Months)</label>
+            <input asp-for="No_of_Months" class="form-control" id="No_of_Months" />
+        </div>
+
+        <div class="col-md-6">
+            <label asp-for="Fees_Amt" class="form-label">Monthly Fee</label>
+            <input asp-for="Fees_Amt" class="form-control" id="Fees_Amt" />
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Total_Fees_Amt" class="form-label">Total Payable Amount</label>
+        <input asp-for="Total_Fees_Amt" class="form-control" id="Total_Fees_Amt" readonly />
+    </div>
+
+
+
+
+
+    <div class="mb-3">
+        <label asp-for="Payment_Status" class="form-label">Payment Status</label><br />
+        <div class="d-flex gap-3">
+            <div>
+                <input type="radio" asp-for="Payment_Status" value="Paid" />
+                <label>Paid</label>
+            </div>
+            <div>
+                <input type="radio" asp-for="Payment_Status" value="Pending" />
+                <label>Pending</label>
+            </div>
+        </div>
+        <span asp-validation-for="Payment_Status" class="text-danger"></span>
+    </div>
+
+
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <label asp-for="Contact_Number" class="form-label">Contact Number (Mobile)</label>
+            <input asp-for="Contact_Number" class="form-control" />
+            <span asp-validation-for="Contact_Number" class="text-danger"></span>
+        </div>
+
+
+        <div class="col-md-6">
+            <label asp-for="Email" class="form-label">Email</label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Address" class="form-label">Address</label>
+        <input asp-for="Address" class="form-control" />
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+
+
+    <!-- Submit -->
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<div class="mt-3">
+<a asp-action="Index">Back to List</a>
+</div>
+
+
+
+<script>
+    function calculateTotal() {
+        let months = parseFloat(document.getElementById("No_of_Months").value) || 0;
+        let fee = parseFloat(document.getElementById("Fees_Amt").value) || 0;
+        document.getElementById("Total_Fees_Amt").value = (months * fee).toFixed(2);
+    }
+
+    document.getElementById("No_of_Months").addEventListener("input", calculateTotal);
+    document.getElementById("Fees_Amt").addEventListener("input", calculateTotal);
+</script>
