@@ -32,7 +32,7 @@ namespace BookMate.Models
         public int No_of_Months { get; set; }
 
        
-        public DateOnly Admission_Date { get; set; } = DateOnly.FromDateTime(DateTime.Now);
+        public DateOnly Admission_Date { get; set; } 
 
 
         [Precision(18, 2)]

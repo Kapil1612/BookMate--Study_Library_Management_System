@@ -6,11 +6,18 @@
 <h4>All Seats</h4>
 
 <hr />
+<div class="d-flex gap-2 mb-2">
 <p>
     <form asp-action="Create_Seat" method="post">
-        <button type="submit" class="btn btn-primary btn-sm">Add Seat</button>
+        <button type="submit" class="btn btn-primary btn-sm">+ Seat</button>
     </form>
 </p>
+<p>
+    <form asp-action="Delete_Seat" method="post">
+        <button type="submit" class="btn btn-danger btn-sm">- Seat</button>
+    </form>
+</p>
+</div>
 <table class="table table-bordered table-hover table-striped shadow">
     <thead>
         <tr>

@@ -19,35 +19,47 @@
 <p>
     <a asp-action="List_Attendance" class="btn btn-primary btn-sm"> Check-In / Check-Out Record</a>
 </p>
-<div style="background-color: #E0E0E0" class="card p-4 shadow">
-    <form method="post" asp-action="Attendance">
-        <div >
-            <label asp-for="StudentID" >Student ID:</label>
-            <input class="ms-3" asp-for="StudentID" required />
+<div class="row">
+<div style="background-color: #E0E0E0" class="card p-4 col-md-5 shadow">
+    <form method="post" asp-action="Attendance" asp-controller="Students">
+<div class="row">
+        <div class="row">
+                    <div class="col-3"><label asp-for="StudentID">Student ID:</label></div>
+
+                    <div class="col-6"><input asp-for="StudentID" class="form-control" placeholder="Enter ID" required /></div>
         </div>
         
-        <div class="mt-3">
-            <label asp-for="SeatID">Select Seat:</label>
-            <select class="ms-3" name="SeatID" >
-                <option value="">-- Select Seat --</option>
-                @foreach (var seat in ViewBag.Seats)
-                {
-                    <option value="@seat.SeatID">@seat.SeatID</option>
-                }
-            </select>
+        <div class="mt-3 row">
+                    <div class="col-3"><label asp-for="SeatID">Seat No:</label></div>
+                    <div class="col-6">
+                        <select asp-for="SeatID" class="form-select" >
+                            <option value="">-- Select Seat --</option>
+                            @foreach (var seat in ViewBag.Seats)
+                            {
+                                <option value="@seat.SeatID">@seat.SeatID</option>
+                            }
+                        </select>
+                    </div>
 
         </div>
 
-        <div class="mt-3">
-            <label for="actionType">Action:</label>
-            <select class="ms-5" id="actionType" name="actionType" required>
-                <option value="CheckIn">Check-In</option>
-                <option value="CheckOut">Check-Out</option>
-            </select>
+        <div class="mt-3 row">
+                    <div class="col-3"> <label asp-for="Status">Action:</label></div>
+                    <div class="col-6">
+                        <select asp-for="Status" class="form-select" required>
+                            <option value="">-- Select Action --</option>
+                            <option value="CheckIn">Check-In</option>
+                            <option value="CheckOut">Check-Out</option>
+                        </select>
+                    </div>
         </div>
-        <div class="mt-4">
-            <button type="submit">Submit</button>
+        <div class="mt-4 row">
+            <div class="col-3"></div>
+                    <div class="col-6"><button type="submit" class="btn btn-light btn-outline-primary">Submit</button></div>
         </div>
+            </div>
+
     </form>
+</div>
 </div>
 

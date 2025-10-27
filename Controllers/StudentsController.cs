@@ -176,19 +176,28 @@ namespace BookMate.Controllers
 
 
         [Authorize(Roles = "Admin")]
+        [ValidateAntiForgeryToken]
         [HttpPost]
-        public IActionResult Attendance(int StudentID, int SeatID, string actionType)
+        public IActionResult Attendance(int StudentID, int SeatID, string Status)
         {
-            if (actionType == "CheckIn")
+           
+            if (Status == "CheckIn")
             {
 
-                // ✅ Check if the Student exists first
+            
                 var studentExists = _context.Students.Any(s => s.ID == StudentID);
                 if (!studentExists)
                 {
                     TempData["Message"] = "❌ Invalid Student ID — student not found in the system.";
                     return RedirectToAction("Attendance"); 
                 }
+
+                if (!_context.Seats.Any(s => s.SeatID == SeatID))
+                {
+                    TempData["Message"] = "❌ Invalid Seat ID — seat does not exist.";
+                    return RedirectToAction("Attendance");
+                }
+
 
 
                 var existingLog = _context.AttendanceLogs
@@ -197,7 +206,7 @@ namespace BookMate.Controllers
 
                 if (existingLog != null)
                 {
-                    // Already checked in, show warning message
+                    
                     TempData["Message"] = "⚠️ You have already checked in and not checked out yet.";
                 }
                 else
@@ -220,9 +229,11 @@ namespace BookMate.Controllers
                         _context.SaveChanges();
                         TempData["Message"] = "✅ Checked In successfully!";
                     }
+                    _context.SaveChanges();
+
                 }
             }
-            else if(actionType == "CheckOut")
+            else if(Status == "CheckOut")
             {
                 var log = _context.AttendanceLogs
                 .FirstOrDefault(a => a.StudentID == StudentID && a.CheckOutTime == null);
@@ -232,7 +243,6 @@ namespace BookMate.Controllers
                     log.CheckOutTime = DateTime.Now;
                     log.Status = "Checked Out";
 
-                    // Free the seat
                     var seat = _context.Seats.Find(log.SeatID);
 
                     if (seat != null)
@@ -241,6 +251,11 @@ namespace BookMate.Controllers
                         _context.SaveChanges();
                         TempData["Message"] = "✅ Checked Out successfully!";
                     }
+
+                }
+                else
+                {
+                    TempData["Message"] = "⚠️ You have already checked Out and not checked In yet.";
                 }
             }
             return RedirectToAction("Attendance");
@@ -280,25 +295,39 @@ namespace BookMate.Controllers
             return View(seats);
         }
 
-        // GET: Add seat form
-        [Authorize(Roles = "Admin")]
-        [HttpGet]
-        public IActionResult Create_Seat()
-        {
-            return View();
-        }
+      
 
         // POST: Add new seat
         [Authorize(Roles = "Admin")]
         [HttpPost]
-        [ActionName("Create_Seat")]
-        public IActionResult Create_Seat_Post()
+        public IActionResult Create_Seat()
         {
             var newSeat = new Seat();
             _context.Seats.Add(newSeat);
             _context.SaveChanges();
             return RedirectToAction("List_Seat");
         }
+
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost]
+        public IActionResult Delete_Seat()
+        {
+            var lastSeat = _context.Seats
+        .OrderByDescending(s => s.SeatID)
+        .FirstOrDefault();
+
+            if (lastSeat == null)
+            {
+                return NotFound();
+            }
+
+            _context.Seats.Remove(lastSeat);
+            _context.SaveChanges();
+
+            return RedirectToAction("List_Seat");
+        }
+
 
 
         private bool StudentExists(int id)

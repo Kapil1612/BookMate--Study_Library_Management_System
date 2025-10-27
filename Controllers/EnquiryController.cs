@@ -47,6 +47,25 @@ namespace BookMate.Controllers
 
 
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
+        public IActionResult Delete(int id)
+        {
+            var std = context.Enquiries.Find(id);
+            
+            if (std != null)
+            {
+                context.Enquiries.Remove(std);
+            }
+
+            context.SaveChanges();
+            return RedirectToAction("Enquiry_List");
+        }
+
+
+
+
 
 
 

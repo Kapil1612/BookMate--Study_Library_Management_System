@@ -12,6 +12,12 @@ builder.Services.AddDefaultIdentity<BookMateUser>(options => options.SignIn.Requ
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("ApplicationDbContextConnection")));
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.SecurePolicy = CookieSecurePolicy.Always; 
+    options.Cookie.SameSite = SameSiteMode.Lax;
+});
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -26,9 +32,12 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

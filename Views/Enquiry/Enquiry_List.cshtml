@@ -40,6 +40,9 @@
                 <th>
                     @Html.DisplayNameFor(model => model.Email)
                 </th>
+                <th>   
+
+                </th>
              
                
             </tr>
@@ -69,6 +72,14 @@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        <form asp-action="Delete" asp-route-id="@item.ID" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-danger btn-sm"
+                                    onclick="return confirm('Are you sure you want to delete this Enquiry ?');">
+                                Delete
+                            </button>
+                        </form>
                     </td>
                    
                    

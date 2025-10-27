@@ -1,0 +1,124 @@
+﻿@model BookMate.Models.ViewModel.SearchViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h4>Custom Report</h4>
+
+<hr />
+
+<div class="row">
+<div style="background-color: #E0E0E0" class="card col-md-7 shadow mb-4 p-4">
+    <form asp-action="Report" method="get">
+        <div class="row g-4">
+            <!-- From Date -->
+            <div class="col-md-2">
+                <p> Date :</p>
+
+            </div>
+            <div class="col-md-5">
+                <label asp-for="StartDate" class="form-label">From</label>
+                <input asp-for="StartDate" class="form-control" type="date" />
+            </div>
+
+            <!-- To Date -->
+            <div class="col-md-5">
+                <label asp-for="EndDate" class="form-label">To</label>
+                <input asp-for="EndDate" class="form-control" type="date" />
+            </div>
+           
+        </div>
+        <div class="row g-4  mt-1">
+            <div class="col-md-2">
+                <p> Search :</p>
+            </div>
+
+            <div class="col-md-3">
+               
+                <input asp-for="StudentSearch" class="form-control"
+                       placeholder="Student Name" />
+            </div>
+
+            <div class="col-md-3">
+
+                    <select asp-for="PaymentSearch" class="form-select">
+                        <option value="">-- Payment status --</option>
+                        <option value="Paid">Paid</option>
+                        <option value="Pending">Pending</option>
+                    </select>
+            </div>
+                <div class="col-md-1 d-flex align-items-center justify-content-center">
+
+                    <a href="@Url.Action("Report", "Home")"><i class="fa-solid fa-rotate fa-xl"></i></a>
+
+                </div>
+           
+
+            <!-- Submit Button -->
+            <div class="col-md-3 ">
+                <button type="submit" class="btn btn-light btn-outline-primary  w-100" >View Report</button>
+            </div>
+
+        </div>
+
+    </form>
+</div>
+<div class="col-md-5 d-grid text-end align-content-between">
+   
+    
+        <p>
+            <a asp-action="Generate_PDF" asp-controller="Home" 
+               asp-route-StudentSearch="@Model.StudentSearch"
+               asp-route-PaymentSearch="@Model.PaymentSearch"
+               asp-route-StartDate="@Model.StartDate?.ToString("dd-MMM-yyyy")"
+               asp-route-EndDate="@Model.EndDate?.ToString("dd-MMM-yyyy")" class="btn btn-success btn-sm  ">Export to PDF <i class="fa-sharp fa-solid fa-file-arrow-down" style="color: #ffffff;"></i></a>
+        </p>    
+    
+    
+        <p class="text-muted ms-2 a">  @Model.Custom_Count Records Found</p>
+   
+
+</div>
+</div>
+
+
+@if (Model.ReportList != null && Model.ReportList.Any())
+{
+
+    <table class="table table-bordered table-striped table-hover ">
+        <thead>
+            <tr>
+                <th>Std Id</th>
+                <th>Student Name</th>
+                <th>Contact Number</th>
+                <th>Admission Date</th>
+                <th>No of Months</th>
+                <th>Fees Amt</th>
+                <th>Total fees</th>
+                <th>Payment Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var visit in Model.ReportList)
+            {
+                <tr>
+                    <td>@visit.student_ID</td>
+                    <td>@visit.Student_Name</td>
+                    <td>@visit.Contact_Number</td>
+                    <td>@visit.Admission_Date</td>
+                    <td>@visit.No_of_Months.ToString()</td>
+                    <td>@visit.Fees_Amt</td>
+                    <td>@visit.Total_Fees_Amt</td>
+                    <td>@visit.Payment_Status</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p class="text-muted">
+        No records found. 
+    </p>
+}
