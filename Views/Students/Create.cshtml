@@ -5,8 +5,13 @@
 
 
 <form asp-action="Create" method="post">
-    <h2>Registration Form</h2>
 
+    <div class="d-flex justify-content-between">
+        <h4>Registration Form</h4>
+        <span>
+        <a asp-action="Index" class="btn btn-sm btn-primary shadow-none ">Back to List</a>
+        </span>
+    </div>
     <hr />
 
 
@@ -115,7 +120,7 @@
 
 
     <!-- Submit -->
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary shadow-none ">Submit</button>
 </form>
 
 <div class="mt-3">

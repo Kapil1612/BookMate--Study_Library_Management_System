@@ -43,7 +43,7 @@
             <div class="col-md-3">
 
                     <select asp-for="PaymentSearch" class="form-select">
-                        <option value="">-- Payment status --</option>
+                        <option value="">-Payment status-</option>
                         <option value="Paid">Paid</option>
                         <option value="Pending">Pending</option>
                     </select>
@@ -57,7 +57,7 @@
 
             <!-- Submit Button -->
             <div class="col-md-3 ">
-                <button type="submit" class="btn btn-light btn-outline-primary  w-100" >View Report</button>
+                    <button type="submit" class="btn btn-light btn-outline-primary shadow-none w-100">View Report</button>
             </div>
 
         </div>
@@ -72,11 +72,11 @@
                asp-route-StudentSearch="@Model.StudentSearch"
                asp-route-PaymentSearch="@Model.PaymentSearch"
                asp-route-StartDate="@Model.StartDate?.ToString("dd-MMM-yyyy")"
-               asp-route-EndDate="@Model.EndDate?.ToString("dd-MMM-yyyy")" class="btn btn-success btn-sm  ">Export to PDF <i class="fa-sharp fa-solid fa-file-arrow-down" style="color: #ffffff;"></i></a>
+               asp-route-EndDate="@Model.EndDate?.ToString("dd-MMM-yyyy")" class="btn btn-success btn-sm shadow-none ">Export to PDF <i class="fa-sharp fa-solid fa-file-arrow-down" style="color: #ffffff;"></i></a>
         </p>    
     
     
-        <p class="text-muted ms-2 a">  @Model.Custom_Count Records Found</p>
+        <p class="text-muted">  @Model.Custom_Count Records Found</p>
    
 
 </div>

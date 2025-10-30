@@ -5,8 +5,13 @@
 }
 
 <form asp-action="Index" method="post">
-    <h4>Student Enquiry Form</h4>
-   
+    
+    <div class="d-flex justify-content-between">
+        <h4>Student Enquiry Form</h4>
+        <span>
+        <a asp-action="Enquiry_List" class="btn btn-sm btn-primary shadow-none ">Back to List</a>
+        </span>
+    </div>
     <hr />
 
    
@@ -72,5 +77,5 @@
 
 
     <!-- Submit -->
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary shadow-none ">Submit</button>
 </form>

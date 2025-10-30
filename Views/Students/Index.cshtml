@@ -9,12 +9,28 @@
 
 <hr />
 
-<p>   
-    <a asp-action="Create" class="btn btn-primary btn-sm">Registration Form</a>
-</p>
 
+<div class="d-flex justify-content-between">
+    
+    <p>
+        <a asp-action="Create" class="btn btn-primary btn-sm shadow-none ">Registration Form</a>
+    </p>
+    <form method="get" class="row g-3 ">
+        <div class="col-md-5">
+            <input type="text" name="name" value="" class="form-control form-control-sm " placeholder="Name or Payment Status" />
+        </div>
 
-    <div class="table-responsive">
+        <div class="col-md-4">
+            <input type="date" name="date" value="" class="form-control form-control-sm" />
+        </div>
+
+        <div class="col-md-3 ">
+            <button type="submit" class="btn btn-primary btn-sm shadow-none text-center w-100">Search</button>
+        </div>
+    </form>
+</div>
+
+<div class="table-responsive">
 <table class="table table-hover table-striped table-bordered w-100 ">
     <thead>
         <tr>
@@ -48,9 +64,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.Payment_Status)
             </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Student_Status)
-            </th>
+          
             <th class="text-nowrap">
                 @Html.DisplayNameFor(model => model.Contact_Number)
             </th>
@@ -97,9 +111,7 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Payment_Status)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Student_Status)
-            </td>
+           
             <td>
                 @Html.DisplayFor(modelItem => item.Contact_Number)
             </td>
@@ -110,8 +122,8 @@
                 @Html.DisplayFor(modelItem => item.Address)
             </td>
             <td class="text-nowrap resp">
-                        <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-success btn-sm">Details</a> |
-                        <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-danger btn-sm">Manage</a>
+                        <a asp-action="Details" asp-route-id="@item.ID" class="btn btn-success btn-sm shadow-none">Details</a> 
+                        <a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-danger btn-sm shadow-none">Manage</a>
             </td>
         </tr>
 }

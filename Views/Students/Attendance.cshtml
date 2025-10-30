@@ -16,11 +16,19 @@
 
     </div>
 }
-<p>
-    <a asp-action="List_Attendance" class="btn btn-primary btn-sm"> Check-In / Check-Out Record</a>
-</p>
+<div class="dropdown mb-4">
+    <button class="btn btn-primary btn-sm shadow-none dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+        Attendance Log
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        <li><a class="dropdown-item" href="/Students/List_Attendance">All</a></li>
+        <li><a class="dropdown-item" href="/Students/Today_Attendance">Today</a></li>       
+    </ul>
+</div>
+
+
 <div class="row">
-<div style="background-color: #E0E0E0" class="card p-4 col-md-5 shadow">
+<div style="background-color: #E0E0E0" class="card p-4 ms-2 col-md-5 shadow">
     <form method="post" asp-action="Attendance" asp-controller="Students">
 <div class="row">
         <div class="row">
@@ -55,7 +63,7 @@
         </div>
         <div class="mt-4 row">
             <div class="col-3"></div>
-                    <div class="col-6"><button type="submit" class="btn btn-light btn-outline-primary">Submit</button></div>
+                    <div class="col-6"><button type="submit" class="btn btn-light btn-outline-primary shadow-none ">Submit</button></div>
         </div>
             </div>
 

@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace BookMate.Controllers
 {
@@ -26,12 +27,34 @@ namespace BookMate.Controllers
 
         // GET: Students
         [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> Index()
+        public IActionResult Index(string name,DateOnly? date)
         {
-            return View(await _context.Students.OrderByDescending(v => v.ID).ToListAsync());
+            var query = _context.Students.AsQueryable();
+
+            if (!string.IsNullOrEmpty(name))
+            {
+
+                if (!string.IsNullOrEmpty(name))
+                {
+                    query = query.Where(v =>
+                        (v.First_Name != null && v.First_Name.Contains(name)) ||
+                        (v.Last_Name != null && v.Last_Name.Contains(name)) ||
+                        (v.Payment_Status != null && v.Payment_Status.Contains(name)));
+                }
+
+            }
+
+            if (date.HasValue)
+            {
+                var selectedDate = date.Value;
+                query = query.Where(v => v.Admission_Date == selectedDate);
+            }
+          
+            var students = query.OrderByDescending(v => v.ID).ToList();
+            return View(students);
         }
 
-        // GET: Students/Details/5
+    
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Details(int? id)
         {
@@ -280,11 +303,33 @@ namespace BookMate.Controllers
                 }).OrderByDescending(v => v.Log_ID)
                   .ToList();
 
-            return View(model);
+            ViewBag.heading = "All Attendance Records";
+            return View("~/Views/Shared/List_Attendance.cshtml", model);
         }
 
 
+        [Authorize(Roles = "Admin")]
+        public IActionResult Today_Attendance()
+        {
+            var model = _context.AttendanceLogs
+                .Include(v => v.Student)
+                .Include(v => v.Seat)
+                .Where(v => v.CheckInTime.HasValue && v.CheckInTime.Value.Date == DateTime.Today)
+                .Select(v => new AttendanceViewModel
+                {
+                    Log_ID = v.AttendID,
+                    student_ID = v.StudentID,
+                    Student_Name = (v.Student != null ? (v.Student.First_Name ?? "") + " " + (v.Student.Last_Name ?? "") : string.Empty),
+                    SeatID = v.SeatID,
+                    CheckInTime = v.CheckInTime,
+                    CheckOutTime = v.CheckOutTime,
+                    Status = v.Status
+                }).OrderByDescending(v => v.Log_ID)
+                  .ToList();
 
+            ViewBag.heading = "Today`s Attendance";
+            return View("~/Views/Shared/List_Attendance.cshtml", model);
+        }
 
 
         // Show list of seats
