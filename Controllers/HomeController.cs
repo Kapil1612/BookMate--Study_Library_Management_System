@@ -30,10 +30,10 @@ namespace BookMate.Controllers
         [Authorize(Roles = "Admin")]
         public IActionResult Report(SearchViewModel model)
         {
-            // Start building the query
+          
             var query = _context.Students.AsQueryable();
 
-            // Apply filters only if values exist
+          
             if (!string.IsNullOrWhiteSpace(model.StudentSearch))
             {
                 query = query.Where(v =>
@@ -196,19 +196,19 @@ namespace BookMate.Controllers
                 using (var document = new Document(pdf))
                 {
 
-                    // Title
+                  
                     document.Add(new Paragraph("Report")
                         .SetTextAlignment(TextAlignment.CENTER)
                         .SetFontSize(18)
                         .SetBold());
 
-                    // Subtitle
+                   
                     document.Add(new Paragraph($"Generated on: {DateTime.Now:f}")
                         .SetTextAlignment(TextAlignment.CENTER)
                         .SetFontSize(10));
                     document.Add(new Paragraph("\n"));
 
-                    // Filters summary
+                  
                     document.Add(new Paragraph("Applied Filters:")
                         .SetBold().SetUnderline());
                     document.Add(new Paragraph(
